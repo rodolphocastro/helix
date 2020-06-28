@@ -1,25 +1,27 @@
-import { isUnix } from "./_utils.ts";
 import {
-  checkInstalledWindows,
-  restorePackagesWindows,
-  runScriptWindows,
-  runNpmWindows,
+  isUnix,
+  NpmWrapper,
+  createRestoreCommand,
+  createScriptCommand,
+  createGenericCommand,
+} from "./_utils.ts";
+import {
+  createWindowsWrapper,
 } from "./_windows.ts";
 import {
-  checkInstalledLinux,
-  restorePackagesLinux,
-  runNpmLinux,
-  runScriptLinux,
+  createLinuxWrapper,
 } from "./_unix.ts";
+
+function createWrapper(): NpmWrapper {
+  return isUnix() ? createLinuxWrapper() : createWindowsWrapper();
+}
 
 /**
  * Checks if NPM is installed and available.
  */
 export function isNpmInstalled(): Promise<boolean> {
-  if (!isUnix()) {
-    return checkInstalledWindows();
-  }
-  return checkInstalledLinux();
+  const wrapper = createWrapper();
+  return wrapper.isInstalled();
 }
 
 /**
@@ -28,10 +30,9 @@ export function isNpmInstalled(): Promise<boolean> {
  */
 export function restoreNpmPackages(dir?: string): Promise<boolean> {
   dir = dir ?? Deno.cwd();
-  if (!isUnix()) {
-    return restorePackagesWindows(dir);
-  }
-  return restorePackagesLinux(dir);
+  const wrapper = createWrapper();
+  const command = createRestoreCommand(dir);
+  return wrapper.run(command);
 }
 
 /**
@@ -44,10 +45,9 @@ export function runNpmScript(
   dir?: string,
 ): Promise<boolean> {
   dir = dir ?? Deno.cwd();
-  if (!isUnix()) {
-    return runScriptWindows(scriptName, dir);
-  }
-  return runScriptLinux(scriptName, dir);
+  const wrapper = createWrapper();
+  const command = createScriptCommand(dir, scriptName);
+  return wrapper.run(command);
 }
 
 /**
@@ -60,8 +60,7 @@ export function runNpmCommand(
   dir?: string,
 ): Promise<boolean> {
   dir = dir ?? Deno.cwd();
-  if (!isUnix()) {
-    return runNpmWindows(commandArgs, dir);
-  }
-  return runNpmLinux(commandArgs, dir);
+  const wrapper = createWrapper();
+  const command = createGenericCommand(commandArgs, dir);
+  return wrapper.run(command);
 }
