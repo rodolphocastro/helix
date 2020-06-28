@@ -5,7 +5,12 @@ import {
   runScriptWindows,
   runNpmWindows,
 } from "./_windows.ts";
-import { checkInstalledLinux, restorePackagesLinux, runNpmLinux, runScriptLinux } from "./_unix.ts";
+import {
+  checkInstalledLinux,
+  restorePackagesLinux,
+  runNpmLinux,
+  runScriptLinux,
+} from "./_unix.ts";
 
 /**
  * Checks if NPM is installed and available.
@@ -34,7 +39,10 @@ export function restoreNpmPackages(dir?: string): Promise<boolean> {
  * @param scriptName Script to be executed
  * @param dir Directory containing packages.json
  */
-export function runNpmScript(scriptName: string, dir?: string): Promise<boolean> {
+export function runNpmScript(
+  scriptName: string,
+  dir?: string,
+): Promise<boolean> {
   dir = dir ?? Deno.cwd();
   if (!isUnix()) {
     return runScriptWindows(scriptName, dir);

@@ -23,15 +23,15 @@ function createProcessLinux(
 export async function checkInstalledLinux(
   versionParam: string = "--version",
 ): Promise<boolean> {
-    try {
-        const p = createProcessLinux(["npm", versionParam], Deno.cwd(), "piped");
-        const { success } = await p.status();
-        p.close();
-        return success;
-    } catch (err) {
-        console.error(err);
-        return false;
-    }
+  try {
+    const p = createProcessLinux(["npm", versionParam], Deno.cwd(), "piped");
+    const { success } = await p.status();
+    p.close();
+    return success;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
 }
 
 /**
