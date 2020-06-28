@@ -5,31 +5,28 @@ import {
   runScriptWindows,
   runNpmWindows,
 } from "./_windows.ts";
+import { checkInstalledLinux, restorePackagesLinux, runNpmLinux, runScriptLinux } from "./_unix.ts";
 
 /**
  * Checks if NPM is installed and available.
  */
-export async function isNpmInstalled(): Promise<boolean> {
+export function isNpmInstalled(): Promise<boolean> {
   if (!isUnix()) {
     return checkInstalledWindows();
   }
-
-  console.error("Not yet implemented for Unix systems");
-  return false;
+  return checkInstalledLinux();
 }
 
 /**
  * Restore packages for a given Directory.
  * @param dir Directory containing packages.json
  */
-export async function restoreNpmPackages(dir?: string) {
+export function restoreNpmPackages(dir?: string): Promise<boolean> {
   dir = dir ?? Deno.cwd();
   if (!isUnix()) {
     return restorePackagesWindows(dir);
   }
-
-  console.error("Not yet implemented for Unix systems");
-  return false;
+  return restorePackagesLinux(dir);
 }
 
 /**
@@ -37,14 +34,12 @@ export async function restoreNpmPackages(dir?: string) {
  * @param scriptName Script to be executed
  * @param dir Directory containing packages.json
  */
-export async function runNpmScript(scriptName: string, dir?: string) {
+export function runNpmScript(scriptName: string, dir?: string): Promise<boolean> {
   dir = dir ?? Deno.cwd();
   if (!isUnix()) {
     return runScriptWindows(scriptName, dir);
   }
-
-  console.error("Not yet implemented for Unix systems");
-  return false;
+  return runScriptLinux(scriptName, dir);
 }
 
 /**
@@ -52,7 +47,7 @@ export async function runNpmScript(scriptName: string, dir?: string) {
  * @param commandArgs 
  * @param dir 
  */
-export async function runNpmCommand(
+export function runNpmCommand(
   commandArgs: string[],
   dir?: string,
 ): Promise<boolean> {
@@ -60,9 +55,10 @@ export async function runNpmCommand(
   if (!isUnix()) {
     return runNpmWindows(commandArgs, dir);
   }
-
-  console.error("Not yet implemented for Unix systems");
-  return false;
+  return runNpmLinux(commandArgs, dir);
 }
 
 console.log(await isNpmInstalled());
+console.log(await restoreNpmPackages('./subject/'));
+console.log(await runNpmScript('build', './subject/'));
+console.log(await runNpmCommand(['fund'], './subject/'));
