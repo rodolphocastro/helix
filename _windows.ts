@@ -1,81 +1,61 @@
-const windowsCmd = ["cmd", "/c"];
+import { NpmWrapper, RunnableCommand, createVersionCommand } from "./_utils.ts";
 
-/**
+class WindowsWraper implements NpmWrapper {
+  private readonly windowsCmd = ["cmd", "/c"];
+
+  /**
  * Builds a subprocess for Windows environments.
  * @param command Command to be wrapped
  * @param dir Directory for context
  * @param stdout Stdout to be used
  */
-function createProcessWindows(
-  command: string[],
-  dir?: string,
-  stdout?: "piped",
-) {
-  return Deno.run({
-    cmd: [...windowsCmd, ...command],
-    cwd: dir,
-    stdout,
-  });
+  private createProcessWindows(
+    command: string[],
+    stdout?: "piped" | "inherit",
+    dir?: string,
+  ) {
+    return Deno.run({
+      cmd: [...this.windowsCmd, ...command],
+      cwd: dir,
+      stdout,
+    });
+  }
+
+  async isInstalled() {
+    const { argsChain, output } = createVersionCommand();
+    try {
+      const p = this.createProcessWindows(
+        argsChain,
+        output,
+      );
+      const { success } = await p.status();
+      p.close();
+      return success;
+    } catch {
+      return false;
+    }
+  }
+
+  async run(cmd: RunnableCommand) {
+    const { dir = Deno.cwd(), argsChain, output } = cmd;
+    try {
+      const p = this.createProcessWindows(
+        argsChain,
+        output,
+        dir,
+      );
+      const { success } = await p.status();
+      p.close();
+      return success;
+    } catch {
+      return false;
+    }
+  }
 }
 
 /**
- * Checks if NPM is installed within a Windows environment.
- * @param versionParam version flag for NPM
+ * Creates a new NPM wrapper for Windows environments.
  */
-export async function checkInstalledWindows(
-  versionParam: string = "--version",
-): Promise<boolean> {
-  const p = createProcessWindows(["npm", versionParam], Deno.cwd(), "piped");
-  const { success } = await p.status();
-  p.close();
-  return success;
-}
-
-/**
- * Attempts to restore NPM packages.
- * @param dir Directory containing packages.json
- */
-export async function restorePackagesWindows(
-  dir: string = Deno.cwd(),
-): Promise<boolean> {
-  const p = createProcessWindows(["npm", "install"], dir);
-  const { success } = await p.status();
-  p.close();
-  return success;
-}
-
-/**
- * Attempts to run a NPM script.
- * @param scriptName Script to be executed
- * @param dir Directory containing packages.json
- */
-export async function runScriptWindows(
-  scriptName: string,
-  dir: string = Deno.cwd(),
-) {
-  const p = createProcessWindows(["npm", "run", scriptName], dir);
-  const { success } = await p.status();
-  p.close();
-  return success;
-}
-
-/**
- * Attempts to run a NPM Command.
- * @param params Execution params, defaults to --version
- * @param dir Directory for context
- * @param verbose Flag to hide/show NPM output
- */
-export async function runNpmWindows(
-  params: string[] = ["--version"],
-  dir: string = Deno.cwd(),
-  verbose: boolean = false,
-): Promise<boolean> {
-  const p = createProcessWindows(
-    ["npm", ...params],
-    dir,
-    verbose ? "piped" : undefined,
-  );
-  const { success } = await p.status();
-  p.close();
-  return success;
+export function createWindowsWrapper(): NpmWrapper {
+  return new WindowsWraper();
 }
