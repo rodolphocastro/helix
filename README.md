@@ -32,10 +32,10 @@ if (await isNpmInstalled()) {
 ## 🛣 Roadmap
 
 + [X] Windows Wrappers
-  + [X] Module
+  + [X] Module (*tested on Win10 2004*)
   + [ ] Automated Tests
-+ [ ] Linux Wrappers
-  + [ ] Module
++ [X] Linux Wrappers
+  + [X] Module (*tested on Ubuntu 20.04 running within WSL2*)
   + [ ] Automated Tests
 + [ ] Mac Tests
   + [ ] Module
