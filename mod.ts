@@ -1,10 +1,10 @@
-import { isUnix } from "./host.ts";
+import { isUnix } from "./_utils.ts";
 import {
   checkInstalledWindows,
   restorePackagesWindows,
   runScriptWindows,
   runNpmWindows,
-} from "./windows.ts";
+} from "./_windows.ts";
 
 /**
  * Checks if NPM is installed and available.
