@@ -4,6 +4,7 @@ import {
   createRestoreCommand,
   createScriptCommand,
   createGenericCommand,
+  NpmCommand,
 } from "./_utils.ts";
 import {
   createWindowsWrapper,
@@ -15,6 +16,8 @@ import {
 function createWrapper(): NpmWrapper {
   return isUnix() ? createLinuxWrapper() : createWindowsWrapper();
 }
+
+export { NpmCommand } from "./_utils.ts";
 
 /**
  * Checks if NPM is installed and available.
@@ -63,4 +66,13 @@ export function runNpmCommand(
   const wrapper = createWrapper();
   const command = createGenericCommand(commandArgs, dir);
   return wrapper.run(command);
+}
+
+/**
+ * Runs a NPM command.
+ * @param npmCommand Command to be run
+ */
+export function runGenericNpmCommand(npmCommand: NpmCommand) {
+  const wrapper = createWrapper();
+  return wrapper.run(npmCommand);
 }

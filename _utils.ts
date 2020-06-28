@@ -81,13 +81,13 @@ class RunScriptCommand extends BaseCommand {
   }
 }
 
-class NpmCommand extends BaseCommand {
+/**
+ * Generic command to be executed using npm as a base.
+ */
+export class NpmCommand extends BaseCommand {
   command: string;
   verbose = true;
 
-  /**
-   *
-   */
   constructor(command: string, directory?: string, args?: string[]) {
     super();
     this.command = command;

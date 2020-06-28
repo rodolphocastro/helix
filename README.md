@@ -10,6 +10,7 @@ Simply import `mod.ts` and call the *wrapper* functions:
 + `restoreNpmPackages`: Attempts to run `npm install` within a *directory*, returns a boolean.
 + `runNpmScript`: Attempts to run `npm run` for a *script* and within a *directory*, returns a boolean.
 + `runNpmCommand`: Attempts to run `npm <command>` within a *directory*, returns a boolean.
++ `runGenericNpmCommand`: Attempts to run a `npm <command>` created as a Object *inheriting* the `NpmCommand` class.
 
 ### 📌 Sample
 
@@ -25,7 +26,7 @@ The following snippet runs the following, using this Module:
 if (await isNpmInstalled()) {
  await restoreNpmPackages('./subject/');
  await runNpmCommand(['fund'], './subject/');
- await runNpmScript('build', './subject/')   
+ await runNpmScript('build', './subject/')
 }
 ```
 
@@ -42,4 +43,4 @@ if (await isNpmInstalled()) {
   + [ ] Module
   + [ ] Automated Tests
 + [ ] Improve Logging
-+ [ ] Allow extensibility
++ [X] Allow extensibility
