@@ -52,12 +52,17 @@ export async function runNpmScript(scriptName: string, dir?: string) {
  * @param commandArgs 
  * @param dir 
  */
-export async function runNpmCommand(commandArgs: string[], dir?: string): Promise<boolean> {
-    dir = dir ?? Deno.cwd();
-    if (!isUnix()) {
-        return runNpmWindows(commandArgs, dir)
-    }
+export async function runNpmCommand(
+  commandArgs: string[],
+  dir?: string,
+): Promise<boolean> {
+  dir = dir ?? Deno.cwd();
+  if (!isUnix()) {
+    return runNpmWindows(commandArgs, dir);
+  }
 
-    console.error("Not yet implemented for Unix systems");
-    return false;
+  console.error("Not yet implemented for Unix systems");
+  return false;
 }
+
+console.log(await isNpmInstalled());

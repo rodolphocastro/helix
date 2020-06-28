@@ -70,7 +70,11 @@ export async function runNpmWindows(
   dir: string = Deno.cwd(),
   verbose: boolean = false,
 ): Promise<boolean> {
-  const p = createProcessWindows(['npm', ...params], dir, verbose ? "piped" : undefined);
+  const p = createProcessWindows(
+    ["npm", ...params],
+    dir,
+    verbose ? "piped" : undefined,
+  );
   const { success } = await p.status();
   p.close();
   return success;
