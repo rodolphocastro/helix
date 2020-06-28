@@ -1,6 +1,6 @@
 # 🐚 Helix
 
-**Helix** is a simple wrapper for `npm` commands! Run your favorite `npm` commands fron within Deno itself!
+**Helix** is a non-ambitious wrappers for `npm` commands! Run your favorite `npm` commands directly from your Deno app!
 
 ## ⚡ Quickstart
 
@@ -37,7 +37,9 @@ if (await isNpmInstalled()) {
 + [X] Linux Wrappers
   + [X] Module (*tested on Ubuntu 20.04 running within WSL2*)
   + [ ] Automated Tests
++ [ ] CLI
 + [ ] Mac Tests
   + [ ] Module
   + [ ] Automated Tests
-+ [ ] CLI
++ [ ] Improve Logging
++ [ ] Allow extensibility

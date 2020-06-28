@@ -43,9 +43,9 @@ export function runNpmScript(scriptName: string, dir?: string): Promise<boolean>
 }
 
 /**
- * 
- * @param commandArgs 
- * @param dir 
+ * Runs a NPM command.
+ * @param commandArgs Command to be run, e.g. fund
+ * @param dir Directory for context
  */
 export function runNpmCommand(
   commandArgs: string[],
@@ -57,8 +57,3 @@ export function runNpmCommand(
   }
   return runNpmLinux(commandArgs, dir);
 }
-
-console.log(await isNpmInstalled());
-console.log(await restoreNpmPackages('./subject/'));
-console.log(await runNpmScript('build', './subject/'));
-console.log(await runNpmCommand(['fund'], './subject/'));
