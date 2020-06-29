@@ -20,7 +20,7 @@ function createWrapper(): NpmWrapper {
 export { NpmCommand } from "./_utils.ts";
 
 /**
- * Checks if NPM is installed and available.
+ * Checks if NPM is installed and available. This requires the --allow-run permission.
  */
 export function isNpmInstalled(): Promise<boolean> {
   const wrapper = createWrapper();
@@ -28,7 +28,7 @@ export function isNpmInstalled(): Promise<boolean> {
 }
 
 /**
- * Restore packages for a given Directory.
+ * Restore packages for a given Directory. This requires the --allow-run permission.
  * @param dir Directory containing packages.json
  */
 export function restoreNpmPackages(dir?: string): Promise<boolean> {
@@ -39,7 +39,7 @@ export function restoreNpmPackages(dir?: string): Promise<boolean> {
 }
 
 /**
- * Runs a NPM Script via "npm run <script>"
+ * Runs a NPM Script via "npm run <script>". This requires the --allow-run permission.
  * @param scriptName Script to be executed
  * @param dir Directory containing packages.json
  */
@@ -54,7 +54,7 @@ export function runNpmScript(
 }
 
 /**
- * Runs a NPM command.
+ * Runs a NPM command. This requires the --allow-run permission.
  * @param commandArgs Command to be run, e.g. fund
  * @param dir Directory for context
  */
@@ -69,7 +69,7 @@ export function runNpmCommand(
 }
 
 /**
- * Runs a NPM command.
+ * Runs a NPM command. This requires the --allow-run permission.
  * @param npmCommand Command to be run
  */
 export function runGenericNpmCommand(npmCommand: NpmCommand) {

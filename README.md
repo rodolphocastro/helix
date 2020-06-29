@@ -2,6 +2,8 @@
 
 **Helix** is a non-ambitious wrappers for `npm` commands! Run your favorite `npm` commands directly from your Deno app!
 
+The only permission required for this Module is `--allow-run`, we need this permission to invoke `npm`.
+
 ## ⚡ Quickstart
 
 Simply import `mod.ts` and call the *wrapper* functions:
@@ -28,6 +30,8 @@ if (await isNpmInstalled()) {
  await runNpmCommand(['fund'], './subject/');
  await runNpmScript('build', './subject/')
 }
+
+// Run with deno run --allow-run myfile.ts
 ```
 
 ## 🛣 Roadmap
