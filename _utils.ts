@@ -60,7 +60,10 @@ class CheckVersionCommand extends BaseCommand {
   verbose = false;
 }
 
-class RestorePackagesCommand extends BaseCommand {
+/**
+ * Wrapper command for `npm install`
+ */
+export class RestorePackagesCommand extends BaseCommand {
   command = "install";
   verbose = true;
 
@@ -70,7 +73,10 @@ class RestorePackagesCommand extends BaseCommand {
   }
 }
 
-class RunScriptCommand extends BaseCommand {
+/**
+ * Wrapper command for `npm run`.
+ */
+export class RunScriptCommand extends BaseCommand {
   command = "run";
   verbose = true;
 

@@ -17,7 +17,11 @@ function createWrapper(): NpmWrapper {
   return isUnix() ? createLinuxWrapper() : createWindowsWrapper();
 }
 
-export { NpmCommand } from "./_utils.ts";
+export {
+  NpmCommand,
+  RestorePackagesCommand,
+  RunScriptCommand,
+} from "./_utils.ts";
 
 /**
  * Checks if NPM is installed and available. This requires the --allow-run permission.
