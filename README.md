@@ -4,6 +4,12 @@
 
 The only permission required for this Module is `--allow-run`, we need this permission to invoke `npm`.
 
+---
+
+## 🚦 Build Status
+
+**Master**(latest): ![Deno - Cache](https://github.com/rodolphocastro/helix/workflows/Deno%20-%20Cache/badge.svg)
+
 ## ⚡ Quickstart
 
 Simply import `mod.ts` and call the *wrapper* functions:
